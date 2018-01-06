@@ -19,7 +19,7 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--start_filename', type=str, default='street',
                         help="starting string of file name")
     parser.add_argument("-o", "--output", type=str, default='test',
-                        help="path to output video file")
+                        help="name for output video file")
     parser.add_argument("-fps", '--fps', type=float, default=30.0,
                         help="set fps for output video")
     parser.add_argument("-change_size", '--change_size', type=bool, default=False,
@@ -33,7 +33,11 @@ if __name__ == '__main__':
     filepaths = getTargetPath(args.directory_path, args.start_filename)
     print(filepaths)
 
-    output = args.output + '.avi'
+    output_directory = 'output'
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+    outputName = args.output + '.avi'
+    output = os.path.join(output_directory, outputName)
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     fps = args.fps
     if args.change_size == False:
